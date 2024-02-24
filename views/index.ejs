@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: rgb(134, 69, 247);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            position: relative;
+        }
+
+        button {
+            margin-right: 10px;
+        }
+        h1 {
+            margin: auto;
+            text-align: center;
+            color: rgb(247, 235, 255);
+        }
+
+        .actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex; 
+        }
+
+        .actions button {
+            margin-right: 10px;
+            background-color: rgb(255, 101, 31);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px; 
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        }
+
+        .actions button:hover {
+            background-color: rgb(126, 49, 14);
+        }
+
+        #create {
+    margin-right: 10px;
+    background-color: rgb(255, 101, 31);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px; 
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    border: 2px solid rgb(255, 255, 255);
+}
+
+#create:hover {
+    background-color: rgb(126, 49, 14); 
+}
+
+
+
+        #task {
+            background: rgb(247, 235, 255);
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Manager</h1>
+    <ul>
+        <% initialTasks.forEach(task => { %>
+            <div id="task">
+                <li>
+                    <div class="actions">
+                        <form method="post" action="/tasks/<%= task.id %>/complete?_method=PATCH">
+                            <button type="submit" id="complete">Mark as Completed</button>
+                        </form>
+                        <button onclick="edit('<%= task.id %>')">Edit</button>
+                        <button onclick="view('<%= task.id %>')">View</button>
+                        <form method="post" action="/tasks/<%= task.id %>?_method=DELETE">
+                            <button type="submit" id="delete">Delete</button>
+                        </form>
+                    </div>
+                    <strong><%= task.title %></strong>
+                    <p><%= task.description %></p>
+                    <p>Due Date: <%= task.dueDate %></p>
+                    <% if (task.completed) { %>
+                        <p>Status: Completed</p>
+                    <% } else { %>
+                        <p>Status: Incomplete</p>
+                    <% } %>
+                    <hr>
+                </li>
+            </div>
+        <% }); %>
+    </ul>
+
+    <button id="create" onclick="createTask()">Create New Task</button>
+    <script>
+        function createTask() {
+            window.location.href = 'http://localhost:8080/tasks/new';
+        }
+
+        function view(taskId) {
+            window.location.href = 'http://localhost:8080/tasks/' + taskId;
+        }
+
+        function edit(taskId) {
+            window.location.href = 'http://localhost:8080/tasks/' + taskId + '/edit';
+        }
+
+    </script>
+</body>
+</html>

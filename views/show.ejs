@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Task</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: rgb(134, 69, 247); /* Purple background color */
+    color: black; 
+}
+
+h1 {
+    color:rgb(247, 235, 255); /* Orange heading color */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    position: relative;
+    background: rgb(247, 235, 255); /* Light purple background color */
+}
+
+button {
+    margin-right: 10px;
+}
+
+.actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Task Manager</h1>
+    <ul>
+        <% if (task) { %>
+            <li>
+                <strong><%= task.title %></strong>
+                <p><%= task.description %></p>
+                <p>Due Date: <%= task.dueDate %></p>
+                <% if (task.completed) { %>
+                    <p>Status: Completed</p>
+                <% } else { %>
+                    <p>Status: Incomplete</p>
+                <% } %>
+                <hr>
+            </li>
+        <% } else { %>
+            <li>
+                <p>No task found.</p>
+            </li>
+        <% } %>
+    </ul>
+</body>
+</html>
